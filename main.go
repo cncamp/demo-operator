@@ -85,6 +85,10 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "MyDaemonset")
 		os.Exit(1)
 	}
+	if err = (&appsv1beta1.MyDaemonset{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "MyDaemonset")
+		os.Exit(1)
+	}
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
